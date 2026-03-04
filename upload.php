@@ -1,21 +1,25 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Set header for JSON response
 header('Content-Type: application/json');
 
 // Configuration
 $uploadDir = 'img/uploads/';
-$allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-$maxFileSize = 5 * 1024 * 1024; // 5MB
+$dataFile = 'gallery.json';
 
-// Create upload directory if it doesn't exist
+// Create directories if they don't exist
+if (!file_exists('img')) {
+    mkdir('img', 0777, true);
+}
 if (!file_exists($uploadDir)) {
     mkdir($uploadDir, 0777, true);
 }
 
-// Get JSON data
-$data = json_decode(file_get_contents('php://input'), true);
-
-// Handle different actions
-$action = $_GET['action'] ?? '';
+// Get the action from the request
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 
 switch($action) {
     case 'upload':
@@ -32,7 +36,7 @@ switch($action) {
 }
 
 function handleUpload() {
-    global $uploadDir, $allowedTypes, $maxFileSize;
+    global $uploadDir, $dataFile;
     
     // Check if file was uploaded
     if (!isset($_FILES['image'])) {
@@ -41,22 +45,33 @@ function handleUpload() {
     }
     
     $file = $_FILES['image'];
-    $caption = $_POST['caption'] ?? '';
-    $category = $_POST['category'] ?? 'general';
+    $caption = isset($_POST['caption']) ? $_POST['caption'] : '';
+    $category = isset($_POST['category']) ? $_POST['category'] : 'general';
     
-    // Check for errors
+    // Check for upload errors
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        echo json_encode(['success' => false, 'message' => 'Upload error: ' . $file['error']]);
+        $errors = [
+            UPLOAD_ERR_INI_SIZE => 'File exceeds upload_max_filesize',
+            UPLOAD_ERR_FORM_SIZE => 'File exceeds MAX_FILE_SIZE',
+            UPLOAD_ERR_PARTIAL => 'File was only partially uploaded',
+            UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+            UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+            UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+            UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
+        ];
+        $errorMsg = isset($errors[$file['error']]) ? $errors[$file['error']] : 'Unknown upload error';
+        echo json_encode(['success' => false, 'message' => 'Upload error: ' . $errorMsg]);
         return;
     }
     
-    // Check file size
-    if ($file['size'] > $maxFileSize) {
+    // Check file size (max 5MB)
+    if ($file['size'] > 5 * 1024 * 1024) {
         echo json_encode(['success' => false, 'message' => 'File too large. Max 5MB']);
         return;
     }
     
     // Check file type
+    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mimeType = finfo_file($finfo, $file['tmp_name']);
     finfo_close($finfo);
@@ -73,7 +88,7 @@ function handleUpload() {
     
     // Move uploaded file
     if (move_uploaded_file($file['tmp_name'], $filepath)) {
-        // Save image info to JSON file
+        // Create image data
         $imageData = [
             'id' => uniqid(),
             'filename' => $filename,
@@ -83,7 +98,19 @@ function handleUpload() {
             'date' => date('Y-m-d H:i:s')
         ];
         
-        saveImageInfo($imageData);
+        // Save to JSON file
+        $gallery = [];
+        if (file_exists($dataFile)) {
+            $content = file_get_contents($dataFile);
+            if (!empty($content)) {
+                $gallery = json_decode($content, true);
+                if (!is_array($gallery)) {
+                    $gallery = [];
+                }
+            }
+        }
+        $gallery[] = $imageData;
+        file_put_contents($dataFile, json_encode($gallery, JSON_PRETTY_PRINT));
         
         echo json_encode([
             'success' => true,
@@ -96,20 +123,27 @@ function handleUpload() {
 }
 
 function getGallery() {
-    $galleryFile = 'gallery.json';
+    global $dataFile;
     
-    if (file_exists($galleryFile)) {
-        $data = json_decode(file_get_contents($galleryFile), true);
-        echo json_encode(['success' => true, 'images' => $data]);
-    } else {
-        echo json_encode(['success' => true, 'images' => []]);
+    if (file_exists($dataFile)) {
+        $content = file_get_contents($dataFile);
+        if (!empty($content)) {
+            $images = json_decode($content, true);
+            if (is_array($images)) {
+                echo json_encode(['success' => true, 'images' => $images]);
+                return;
+            }
+        }
     }
+    echo json_encode(['success' => true, 'images' => []]);
 }
 
 function deleteImage() {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $imageId = $data['id'] ?? '';
-    $filepath = $data['filepath'] ?? '';
+    global $dataFile;
+    
+    $input = json_decode(file_get_contents('php://input'), true);
+    $imageId = isset($input['id']) ? $input['id'] : '';
+    $filepath = isset($input['filepath']) ? $input['filepath'] : '';
     
     if (!$imageId || !$filepath) {
         echo json_encode(['success' => false, 'message' => 'Missing image ID or path']);
@@ -122,28 +156,19 @@ function deleteImage() {
     }
     
     // Remove from JSON
-    $galleryFile = 'gallery.json';
-    if (file_exists($galleryFile)) {
-        $images = json_decode(file_get_contents($galleryFile), true);
-        $images = array_filter($images, function($img) use ($imageId) {
-            return $img['id'] !== $imageId;
-        });
-        file_put_contents($galleryFile, json_encode(array_values($images), JSON_PRETTY_PRINT));
+    if (file_exists($dataFile)) {
+        $content = file_get_contents($dataFile);
+        if (!empty($content)) {
+            $images = json_decode($content, true);
+            if (is_array($images)) {
+                $images = array_filter($images, function($img) use ($imageId) {
+                    return $img['id'] !== $imageId;
+                });
+                file_put_contents($dataFile, json_encode(array_values($images), JSON_PRETTY_PRINT));
+            }
+        }
     }
     
     echo json_encode(['success' => true, 'message' => 'Image deleted successfully']);
-}
-
-function saveImageInfo($imageData) {
-    $galleryFile = 'gallery.json';
-    
-    if (file_exists($galleryFile)) {
-        $images = json_decode(file_get_contents($galleryFile), true);
-        $images[] = $imageData;
-    } else {
-        $images = [$imageData];
-    }
-    
-    file_put_contents($galleryFile, json_encode($images, JSON_PRETTY_PRINT));
 }
 ?>
