@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mhlongosa Logistics | Removals & Transport - Cape Town</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #0b2b40;
+            --primary-dark: #1a4b63;
+            --secondary: #f9b81b;
+            --light: #f9fafc;
+            --dark: #1e2b37;
+            --gray: #666;
+            --white: #fff;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 14px 36px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover {
+            background-color: #ffcf4d;
+            transform: scale(1.02);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--white);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+            margin: 10px auto 0;
+        }
+        
+        .section-sub {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            color: #3f5a6b;
+            font-size: 1.2rem;
+        }
+        
+        /* ========== ADMIN PORTAL STYLES ========== */
+        
+        /* Floating Admin Button */
+        .floating-admin-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background-color: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(11, 43, 64, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            font-size: 24px;
+        }
+        
+        .floating-admin-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(11, 43, 64, 0.4);
+        }
+        
+        .floating-admin-btn.admin-active {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+        
+        .floating-admin-btn.admin-active:hover {
+            background-color: #ffcf4d;
+        }
+        
+        /* Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            gap: 8px;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1d1d1;
+            display: none;
+        }
+        
+        .mode-toggle-btn {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .mode-toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .mode-toggle-btn:hover:not(.active) {
+            background: #e7f0f7;
+        }
+        
+        .admin-mode #main-website {
+            display: none;
+        }
+        
+        .main-mode #admin-portal {
+            display: none;
+        }
+        
+        .admin-mode .mode-toggle {
+            display: flex;
+        }
+        
+        #main-website {
+            position: relative;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        #admin-portal {
+            min-height: 100vh;
+            background: #f8f9fa;
+            padding-top: 80px;
+        }
+        
+        /* Admin Header */
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+        
+        .admin-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .admin-header p {
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .back-to-site {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: 500;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-site:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .back-to-site i {
+            margin-right: 8px;
+        }
+        
+        /* Admin Container */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        .admin-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            width: 100%;
+        }
+        
+        @media (max-width: 992px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Admin Card */
+        .admin-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        .admin-card h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        /* File Upload Styles */
+        .file-upload-container {
+            border: 2px dashed #d1d1d1;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            width: 100%;
+        }
+        
+        .file-upload-container:hover {
+            border-color: var(--secondary);
+            background-color: #e7f0f7;
+        }
+        
+        .file-upload-container.drag-over {
+            border-color: var(--secondary);
+            background-color: rgba(249, 184, 27, 0.1);
+        }
+        
+        .file-upload-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .file-upload-text h4 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .file-upload-text p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-upload-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .file-upload-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .selected-file {
+            display: flex;
+            align-items: center;
+            background-color: #e7f0f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            width: 100%;
+        }
+        
+        .selected-file.active {
+            display: flex;
+        }
+        
+        .file-icon {
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: none;
+            border: 1px solid #d1d1d1;
+        }
+        
+        .image-preview.active {
+            display: block;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(249, 184, 27, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        /* Gallery Management */
+        .gallery-management {
+            margin-top: 40px;
+            width: 100%;
+        }
+        
+        .gallery-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+        
+        .gallery-item {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .gallery-item-info {
+            padding: 15px;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #e7f0f7;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            width: 100%;
+        }
+        
+        .message.success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .message.error {
+            background-color: #ffebee;
+            color: #e53935;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .message.info {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #bbdefb;
+        }
+        
+        /* Login Form */
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        .login-form {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+        
+        .password-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .storage-info {
+            background-color: #e7f0f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--gray);
+            width: 100%;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: var(--primary);
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+            font-weight: 300;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+        
+        .nav-links a:hover {
+            border-bottom-color: var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .nav-quote-btn {
+            background-color: var(--secondary);
+            color: var(--primary) !important;
+            padding: 10px 24px !important;
+            border-radius: 40px;
+            font-weight: 600;
+            border-bottom: none !important;
+        }
+        
+        .nav-quote-btn:hover {
+            background-color: #ffcf4d;
+            border-bottom: none !important;
+            color: var(--primary) !important;
+        }
+        
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(97deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 0 80px;
+        }
+        
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .hero-content {
+            flex: 1 1 400px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero-content .highlight {
+            color: var(--secondary);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 550px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .hero-image {
+            flex: 1 1 300px;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 30px;
+            box-shadow: 0 20px 25px -10px rgba(0,0,0,0.4);
+        }
+        
+        /* Services */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        .service-card {
+            background: #f4f8fc;
+            border-radius: 28px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: 0.2s ease;
+            border: 1px solid #e2ecf5;
+            box-shadow: 0 5px 12px rgba(0,35,50,0.05);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+        }
+        
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .service-card p {
+            color: #2b4d5e;
+        }
+        
+        /* About */
+        .about-section {
+            padding: 80px 0;
+            background: #e7f0f7;
+        }
+        
+        .about-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1 1 350px;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        
+        .about-text p {
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+            color: #1f4459;
+        }
+        
+        .about-highlight {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0,35,50,0.05);
+        }
+        
+        .about-highlight i {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-right: 15px;
+            width: 40px;
+        }
+        
+        .about-highlight p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .about-image {
+            flex: 1 1 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 40px;
+            box-shadow: 0 20px 25px -10px var(--primary);
+        }
+        
+        /* Gallery */
+        .gallery {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 12px 22px -10px rgba(0,0,0,0.2);
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            z-index: 2;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, var(--primary));
+            color: white;
+            padding: 20px 15px 15px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px black;
+        }
+        
+        .gallery-empty {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+            background: #f4f8fc;
+            border-radius: 40px;
+        }
+        
+        /* Stats */
+        .stats-mini {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+        
+        .stat-mini-item {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 30px;
+            flex: 1 1 120px;
+        }
+        
+        .stat-mini-item i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        .stat-mini-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* Contact */
+        .contact-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            background: #f4f8fc;
+            border-radius: 50px;
+            padding: 60px 50px;
+            box-shadow: 0 15px 30px -12px rgba(11,43,64,0.15);
+            border: 1px solid #d0e2ed;
+        }
+        
+        .contact-info h3 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        
+        .contact-info p {
+            color: #1f4459;
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+            max-width: 400px;
+        }
+        
+        .contact-details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .contact-item i {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: var(--secondary);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            box-shadow: 0 8px 12px rgba(0,0,0,0.05);
+        }
+        
+        .contact-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .contact-item p {
+            margin: 4px 0 0;
+            color: #2b5a72;
+        }
+        
+        .business-hours {
+            margin-top: 35px;
+            background: white;
+            padding: 20px 25px;
+            border-radius: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .business-hours h4 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        
+        .business-hours p {
+            margin: 8px 0;
+            color: #1f4459;
+        }
+        
+        .quick-form h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        
+        .contact-submit {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        
+        .contact-submit:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #05212e;
+            color: #d0e2ed;
+            padding: 50px 0 25px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col p {
+            margin: 15px 0 20px;
+        }
+        
+        .footer-col h4 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col a {
+            color: #bdd8e9;
+            text-decoration: none;
+        }
+        
+        .footer-col a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 18px;
+            font-size: 1.5rem;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            color: #bdd8e9;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            border-top: 1px solid #214e63;
+            padding-top: 25px;
+            text-align: center;
+        }
+        
+        /* Lightbox Gallery */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lightbox-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .lightbox-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+        
+        .lightbox-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+        
+        .lightbox-close:hover {
+            transform: scale(1.2);
+        }
+        
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+                padding: 25px 0 10px;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .contact-grid {
+                padding: 40px 25px;
+            }
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+            .gallery-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="main-mode">
+    <!-- Floating Admin Button -->
+    <button class="floating-admin-btn" id="floatingAdminBtn" title="Admin Portal">
+        <i class="fas fa-cog"></i>
+    </button>
+    
+    <!-- Mode Toggle -->
+    <div class="mode-toggle">
+        <button class="mode-toggle-btn active" data-mode="main">Website</button>
+        <button class="mode-toggle-btn" data-mode="admin">Admin</button>
+    </div>
+    
+    <!-- Lightbox Gallery -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <button class="lightbox-close" id="lightboxClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-container">
+            <img class="lightbox-image" id="lightboxImage" src="" alt="Gallery Image">
+            <div class="lightbox-nav">
+                <button class="lightbox-btn" id="lightboxPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="lightbox-btn" id="lightboxNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="lightbox-counter" id="lightboxCounter"></div>
+        </div>
+    </div>
+    
+    <!-- Main Website -->
+    <div id="main-website">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">Mhlongosa <span>Logistics</span></div>
+                <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" id="navQuoteBtn" class="nav-quote-btn">Get a quote</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Removals & transport <span class="highlight">for homes and businesses</span></h1>
+                    <p>House removals, garden waste, product deliveries — we use our bakkie or cars to get the job done. Local, reliable, and affordable.</p>
+                    <a href="#contact" class="btn" id="openQuoteBtn">Get a quote <i class="fas fa-arrow-right" style="margin-left: 10px;"></i></a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.pexels.com/photos/1278478/pexels-photo-1278478.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bakkie loaded with furniture">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container about-grid">
+                <div class="about-text">
+                    <h2>About Mhlongosa Logistics</h2>
+                    <p>Founded in 2020, we've grown from a single bakkie to a trusted fleet serving Cape Town and surrounding areas. We're a local family business that believes in honest work, fair prices, and treating your belongings like our own.</p>
+                    <p>We work with <strong>individuals</strong> (house moves, garden waste, single items) and <strong>companies</strong> (product deliveries, office relocations, waste removal) across the Cape Peninsula. Every job gets the right vehicle – either a bakkie or a car – because we keep it simple and local.</p>
+                    <div class="about-highlight">
+                        <p><i class="fas fa-truck-pickup"></i> 5 bakkies & 3 cars – always ready</p>
+                        <p><i class="fas fa-leaf"></i> 500+ garden jobs completed</p>
+                        <p><i class="fas fa-smile"></i> 98% of clients would recommend us</p>
+                    </div>
+                    <div class="stats-mini">
+                        <div class="stat-mini-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="stat-mini-number" id="years-counter">5</div>
+                            <div>years</div>
+                        </div>
+                        <div class="stat-mini-item">
+                            <i class="fas fa-truck"></i>
+                            <div class="stat-mini-number" id="vehicles-counter">8</div>
+                            <div>vehicles</div>
+                        </div>
+                        <div class="stat-mini-item">
+                            <i class="fas fa-home"></i>
+                            <div class="stat-mini-number" id="moves-counter">1200+</div>
+                            <div>moves</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.pexels.com/photos/7245519/pexels-photo-7245519.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Our team loading a bakkie">
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">What we move</h2>
+                <p class="section-sub">No cross-border — just local care. From a single chair to an entire garden.</p>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <img src="https://images.pexels.com/photos/5591581/pexels-photo-5591581.jpeg?auto=compress&cs=tinysrgb&w=600" alt="House removals">
+                        <h3>House removals</h3>
+                        <p>Moving homes? We pack, load and transport your furniture safely. Stress‑free relocation.</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="https://images.pexels.com/photos/13018699/pexels-photo-13018699.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Garden removals">
+                        <h3>Garden removals</h3>
+                        <p>Branches, soil, cuttings, green waste — our bakkie takes it all. Cleanup after landscaping.</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="https://images.pexels.com/photos/4498128/pexels-photo-4498128.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Product transport">
+                        <h3>Product transport</h3>
+                        <p>Delivering goods, stock, or equipment for your business. Small loads to full bakkie loads.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery" id="gallery">
+            <div class="container">
+                <h2 class="section-title">Recent work</h2>
+                <p class="section-sub">A glimpse of moves we've done – house removals, garden clean‑ups, and product deliveries.</p>
+                <div id="dynamicGallery" class="gallery-grid">
+                    <!-- Images will be loaded here via JavaScript -->
+                    <div class="gallery-empty">
+                        <i class="fas fa-images" style="font-size: 4rem; color: #ccc; margin-bottom: 20px;"></i>
+                        <h3>Loading gallery...</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Get in touch</h3>
+                        <p>We're here to answer your questions and help you plan your move. Expect a friendly, fast response.</p>
+                        <div class="contact-details-list">
+                            <div class="contact-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <div>
+                                    <h4>Call or WhatsApp</h4>
+                                    <p>+27 71 234 5678</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>info@mhlongosa.co.za</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Depot</h4>
+                                    <p>15 Industrial Road, Cape Town</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="business-hours">
+                            <h4><i class="fas fa-clock"></i> Office hours</h4>
+                            <p><strong>Mon–Fri:</strong> 7:00 – 18:00</p>
+                            <p><strong>Saturday:</strong> 8:00 – 14:00</p>
+                            <p><strong>Sunday:</strong> Closed (emergency calls only)</p>
+                        </div>
+                    </div>
+                    <div class="quick-form">
+                        <h3>Send a quick message</h3>
+                        <form id="quickContactForm">
+                            <div class="form-group">
+                                <input type="text" id="contactName" class="form-control" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="contactEmail" class="form-control" placeholder="Your email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="contactPhone" class="form-control" placeholder="Phone / WhatsApp" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="contactMessage" class="form-control" rows="4" placeholder="Tell us what you need moved..." required></textarea>
+                            </div>
+                            <button type="submit" class="contact-submit"><i class="fas fa-paper-plane" style="margin-right: 10px;"></i>Send message</button>
+                        </form>
+                        <div id="emailStatus" style="margin-top: 15px;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="logo" style="color:white;">Mhlongosa <span>Logistics</span></div>
+                        <p>Local removals & transport in Cape Town. Bakkie and car hire for any load.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="#">House removals</a></li>
+                            <li><a href="#">Garden removals</a></li>
+                            <li><a href="#">Product transport</a></li>
+                            <li><a href="#">Item deliveries</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><i class="fas fa-phone-alt"></i> +27 71 234 5678</li>
+                            <li><i class="fas fa-envelope"></i> info@mhlongosa.co.za</li>
+                            <li><i class="fas fa-map-marker-alt"></i> 15 Industrial Rd, Cape Town</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    &copy; 2025 Mhlongosa Logistics – Serving Cape Town since 2020
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Admin Portal -->
+    <div id="admin-portal">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Mhlongosa Logistics Admin Portal</h1>
+                <p>Upload and manage your gallery images directly from your phone or computer.</p>
+                <a href="#" class="back-to-site switch-to-main"><i class="fas fa-arrow-left"></i> Back to Website</a>
+            </div>
+            
+            <!-- Login Section -->
+            <div id="loginSection" class="login-container">
+                <div class="login-form admin-card">
+                    <h2>Admin Login</h2>
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" id="adminPassword" class="form-control" placeholder="Enter admin password">
+                        <p class="password-hint">Use password: mhlongosa2026!</p>
+                    </div>
+                    <button id="loginBtn" class="btn btn-full" style="width: 100%;">Login</button>
+                </div>
+            </div>
+            
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" style="display: none;">
+                <div class="admin-content">
+                    <div>
+                        <!-- Add New Project -->
+                        <div class="admin-card">
+                            <h2>Add New Gallery Image</h2>
+                            <div id="projectMessageContainer"></div>
+                            
+                            <!-- File Upload Area -->
+                            <div class="file-upload-container" id="fileUploadContainer">
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="file-upload-text">
+                                    <h4>Select or Drop Image</h4>
+                                    <p>Choose an image from your device or drag and drop it here</p>
+                                    <div class="file-upload-btn" id="browseBtn">
+                                        <i class="fas fa-folder-open"></i> Browse Files
+                                    </div>
+                                    <input type="file" id="imageFile" class="file-input" accept="image/*">
+                                </div>
+                            </div>
+                            
+                            <!-- Selected File Info -->
+                            <div class="selected-file" id="selectedFile">
+                                <div class="file-icon">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="file-info">
+                                    <h5 id="fileName">No file selected</h5>
+                                    <p id="fileSize">0 KB</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Image Preview -->
+                            <div class="image-preview" id="imagePreview">
+                                <img id="previewImage" src="" alt="Image preview">
+                            </div>
+                            
+                            <!-- Image Details -->
+                            <div class="form-group">
+                                <label for="imageCaption">Caption</label>
+                                <input type="text" id="imageCaption" class="form-control" placeholder="e.g., Full house removal, Observatory">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="imageCategory">Category</label>
+                                <select id="imageCategory" class="form-control">
+                                    <option value="house-removal">House Removal</option>
+                                    <option value="garden">Garden Removal</option>
+                                    <option value="product">Product Transport</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <button id="uploadImageBtn" class="btn btn-green btn-full" style="width: 100%; background-color: var(--primary); color: white;" disabled>
+                                <i class="fas fa-upload"></i> Upload Image
+                            </button>
+                        </div>
+                        
+                        <!-- Admin Tools -->
+                        <div class="admin-card">
+                            <h2>Admin Tools</h2>
+                            <button id="exportDataBtn" class="btn btn-full" style="width: 100%; margin-bottom: 15px;">
+                                <i class="fas fa-download"></i> Export Data
+                            </button>
+                            <input type="file" id="importFile" class="file-input" accept=".json" style="display: none;">
+                            <button id="importDataBtn" class="btn btn-full" style="width: 100%; margin-bottom: 15px;">
+                                <i class="fas fa-upload"></i> Import Data
+                            </button>
+                            <button id="resetDataBtn" class="btn btn-full" style="width: 100%; margin-bottom: 15px;">
+                                <i class="fas fa-redo"></i> Reset to Default
+                            </button>
+                            <button id="logoutAdminBtn" class="btn btn-full" style="width: 100%;">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <!-- Manage Gallery -->
+                        <div class="gallery-management admin-card">
+                            <h2>Manage Gallery Images</h2>
+                            <p>Click the delete button to remove an image from the gallery.</p>
+                            <div id="galleryCount" class="message info">
+                                Loading images...
+                            </div>
+                            
+                            <div id="galleryList" class="gallery-list">
+                                <!-- Images will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ========== CONFIGURATION ==========
+        const ADMIN_PASSWORD = "mhlongosa2026!";
+        const API_URL = window.location.origin + '/upload.php';
+        
+        // ========== GLOBAL DATA ==========
+        let galleryImages = [];
+        
+        // Default images (fallback)
+        const defaultImages = [
+            {
+                id: 'default-1',
+                filepath: 'https://images.pexels.com/photos/8219434/pexels-photo-8219434.jpeg?auto=compress&cs=tinysrgb&w=600',
+                caption: 'Full house removal, Observatory',
+                category: 'house-removal',
+                date: new Date().toISOString()
+            },
+            {
+                id: 'default-2',
+                filepath: 'https://images.pexels.com/photos/10254812/pexels-photo-10254812.jpeg?auto=compress&cs=tinysrgb&w=600',
+                caption: 'Garden waste after pruning, Rondebosch',
+                category: 'garden',
+                date: new Date().toISOString()
+            },
+            {
+                id: 'default-3',
+                filepath: 'https://images.pexels.com/photos/6189151/pexels-photo-6189151.jpeg?auto=compress&cs=tinysrgb&w=600',
+                caption: 'Product delivery to local shop',
+                category: 'product',
+                date: new Date().toISOString()
+            },
+            {
+                id: 'default-4',
+                filepath: 'https://images.pexels.com/photos/4498265/pexels-photo-4498265.jpeg?auto=compress&cs=tinysrgb&w=600',
+                caption: 'Single furniture item transport',
+                category: 'house-removal',
+                date: new Date().toISOString()
+            },
+            {
+                id: 'default-5',
+                filepath: 'https://images.pexels.com/photos/7245519/pexels-photo-7245519.jpeg?auto=compress&cs=tinysrgb&w=600',
+                caption: 'Garden removal, Cape Town',
+                category: 'garden',
+                date: new Date().toISOString()
+            },
+            {
+                id: 'default-6',
+                filepath: 'https://images.pexels.com/photos/4498128/pexels-photo-4498128.jpeg?auto=compress&cs=tinysrgb&w=600',
+                caption: 'Office move, CBD',
+                category: 'product',
+                date: new Date().toISOString()
+            }
+        ];
+        
+        // ========== LIGHTBOX GALLERY ==========
+        let currentLightboxIndex = 0;
+        
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCounter = document.getElementById('lightboxCounter');
+            
+            if (lightboxOverlay && lightboxImage && lightboxCounter) {
+                lightboxImage.src = galleryImages[index].filepath || galleryImages[index].dataUrl;
+                lightboxCounter.textContent = `${index + 1} / ${galleryImages.length}`;
+                lightboxOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeLightbox() {
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            if (lightboxOverlay) {
+                lightboxOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = galleryImages.length - 1;
+            } else if (currentLightboxIndex >= galleryImages.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCounter = document.getElementById('lightboxCounter');
+            
+            if (lightboxImage && lightboxCounter) {
+                lightboxImage.src = galleryImages[currentLightboxIndex].filepath || galleryImages[currentLightboxIndex].dataUrl;
+                lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${galleryImages.length}`;
+            }
+        }
+        
+        function initializeLightbox() {
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            
+            if (lightboxClose) {
+                lightboxClose.addEventListener('click', closeLightbox);
+            }
+            
+            if (lightboxPrev) {
+                lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+            }
+            
+            if (lightboxNext) {
+                lightboxNext.addEventListener('click', () => navigateLightbox(1));
+            }
+            
+            if (lightboxOverlay) {
+                lightboxOverlay.addEventListener('click', (e) => {
+                    if (e.target === lightboxOverlay) {
+                        closeLightbox();
+                    }
+                });
+            }
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                const lightboxOverlay = document.getElementById('lightboxOverlay');
+                if (!lightboxOverlay.classList.contains('active')) return;
+                
+                switch(e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        navigateLightbox(-1);
+                        break;
+                    case 'ArrowRight':
+                        navigateLightbox(1);
+                        break;
+                }
+            });
+        }
+        
+        // ========== SERVER API FUNCTIONS ==========
+        
+        async function loadGalleryFromServer() {
+            try {
+                const response = await fetch('upload.php?action=get');
+                const data = await response.json();
+                
+                if (data.success && data.images) {
+                    galleryImages = data.images;
+                } else {
+                    // Fallback to defaults
+                    galleryImages = [...defaultImages];
+                }
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                galleryImages = [...defaultImages];
+            }
+            
+            updateMainGallery();
+            if (document.body.classList.contains('admin-mode') && document.getElementById('adminDashboard').style.display !== 'none') {
+                renderAdminGalleryList();
+            }
+        }
+        
+        async function uploadImageToServer(file, caption, category) {
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('caption', caption);
+            formData.append('category', category);
+            
+            try {
+                const response = await fetch('upload.php?action=upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                console.error('Upload error:', error);
+                throw error;
+            }
+        }
+        
+        async function deleteImageFromServer(id, filepath) {
+            try {
+                const response = await fetch('upload.php?action=delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id, filepath })
+                });
+                
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                console.error('Delete error:', error);
+                throw error;
+            }
+        }
+        
+        // ========== GALLERY FUNCTIONS ==========
+        
+        function updateMainGallery() {
+            const galleryDiv = document.getElementById('dynamicGallery');
+            if (!galleryDiv) return;
+            
+            if (galleryImages.length === 0) {
+                galleryDiv.innerHTML = '<div class="gallery-empty"><i class="fas fa-images" style="font-size: 4rem; color: #ccc; margin-bottom: 20px;"></i><h3>Gallery coming soon</h3><p>We\'re currently updating our gallery with recent work. Check back later!</p></div>';
+                return;
+            }
+            
+            let html = '';
+            galleryImages.forEach((img, index) => {
+                const imageUrl = img.filepath || img.dataUrl;
+                html += `
+                    <div class="gallery-item" onclick="openLightbox(${index})">
+                        <img src="${imageUrl}" alt="${img.caption || ''}" onerror="this.src='https://images.pexels.com/photos/8219434/pexels-photo-8219434.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                        ${img.caption ? `<div class="gallery-caption">${img.caption}</div>` : ''}
+                    </div>
+                `;
+            });
+            galleryDiv.innerHTML = html;
+        }
+        
+        // ========== ADMIN FUNCTIONS ==========
+        
+        // Floating admin button
+        const floatingAdminBtn = document.getElementById('floatingAdminBtn');
+        
+        if (floatingAdminBtn) {
+            floatingAdminBtn.addEventListener('click', function() {
+                if (document.body.classList.contains('admin-mode')) {
+                    // Switch to main mode
+                    document.querySelectorAll('.mode-toggle-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.mode-toggle-btn[data-mode="main"]').classList.add('active');
+                    document.body.className = 'main-mode';
+                    this.classList.remove('admin-active');
+                } else {
+                    // Switch to admin mode
+                    document.querySelectorAll('.mode-toggle-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.mode-toggle-btn[data-mode="admin"]').classList.add('active');
+                    document.body.className = 'admin-mode';
+                    this.classList.add('admin-active');
+                    checkLoginStatus();
+                }
+            });
+        }
+        
+        // Mode switching
+        const modeToggleBtns = document.querySelectorAll('.mode-toggle-btn');
+        const switchToMainBtn = document.querySelector('.switch-to-main');
+        
+        modeToggleBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const mode = this.dataset.mode;
+                modeToggleBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.body.className = `${mode}-mode`;
+                
+                if (floatingAdminBtn) {
+                    if (mode === 'admin') {
+                        floatingAdminBtn.classList.add('admin-active');
+                        checkLoginStatus();
+                    } else {
+                        floatingAdminBtn.classList.remove('admin-active');
+                    }
+                }
+            });
+        });
+        
+        if (switchToMainBtn) {
+            switchToMainBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                modeToggleBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.mode-toggle-btn[data-mode="main"]').classList.add('active');
+                document.body.className = 'main-mode';
+                if (floatingAdminBtn) floatingAdminBtn.classList.remove('admin-active');
+            });
+        }
+        
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('mhlongosaAdminLoggedIn') === 'true';
+            if (isLoggedIn) {
+                showAdminDashboard();
+            }
+        }
+        
+        function showMessage(text, type, containerId = 'messageContainer') {
+            const messageContainer = document.getElementById(containerId);
+            if (messageContainer) {
+                messageContainer.innerHTML = `<div class="message ${type}">${text}</div>`;
+                
+                setTimeout(() => {
+                    messageContainer.innerHTML = '';
+                }, 5000);
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Login functionality
+        const loginBtn = document.getElementById('loginBtn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                const passwordInput = document.getElementById('adminPassword');
+                const password = passwordInput ? passwordInput.value : '';
+                
+                if (password === ADMIN_PASSWORD) {
+                    localStorage.setItem('mhlongosaAdminLoggedIn', 'true');
+                    showAdminDashboard();
+                    showMessage('Login successful!', 'success');
+                } else {
+                    showMessage('Incorrect password. Please try again.', 'error');
+                }
+            });
+        }
+        
+        // Logout functionality
+        const logoutAdminBtn = document.getElementById('logoutAdminBtn');
+        if (logoutAdminBtn) {
+            logoutAdminBtn.addEventListener('click', () => {
+                localStorage.removeItem('mhlongosaAdminLoggedIn');
+                const adminDashboard = document.getElementById('adminDashboard');
+                const loginSection = document.getElementById('loginSection');
+                const adminPasswordInput = document.getElementById('adminPassword');
+                
+                if (adminDashboard) adminDashboard.style.display = 'none';
+                if (loginSection) loginSection.style.display = 'block';
+                if (adminPasswordInput) adminPasswordInput.value = '';
+                
+                showMessage('Logged out successfully!', 'success');
+            });
+        }
+        
+        function showAdminDashboard() {
+            const loginSection = document.getElementById('loginSection');
+            const adminDashboard = document.getElementById('adminDashboard');
+            
+            if (loginSection) loginSection.style.display = 'none';
+            if (adminDashboard) {
+                adminDashboard.style.display = 'block';
+                renderAdminGalleryList();
+            }
+        }
+        
+        function renderAdminGalleryList() {
+            const adminGalleryList = document.getElementById('galleryList');
+            if (!adminGalleryList) return;
+            
+            adminGalleryList.innerHTML = '';
+            
+            const galleryCount = document.getElementById('galleryCount');
+            if (galleryCount) {
+                galleryCount.textContent = `Total: ${galleryImages.length} images`;
+                galleryCount.className = 'message info';
+            }
+            
+            if (galleryImages.length === 0) {
+                adminGalleryList.innerHTML = '<div class="message info">No images to display. Upload your first image!</div>';
+                return;
+            }
+            
+            galleryImages.forEach((img, index) => {
+                const imageUrl = img.filepath || img.dataUrl;
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.innerHTML = `
+                    <img src="${imageUrl}" alt="${img.caption}" onerror="this.src='https://images.pexels.com/photos/8219434/pexels-photo-8219434.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                    <div class="gallery-item-info">
+                        <h4>${img.caption || 'No caption'}</h4>
+                        <p>Category: ${img.category || 'general'}</p>
+                        <p>Added: ${new Date(img.date).toLocaleDateString()}</p>
+                        <div class="category-badge">${img.category || 'general'}</div>
+                        <div class="gallery-item-actions" style="margin-top: 10px;">
+                            <button class="btn delete-btn" data-index="${index}" style="background-color: #f44336; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%;">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                adminGalleryList.appendChild(galleryItem);
+            });
+            
+            // Add delete event listeners
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const index = parseInt(this.dataset.index);
+                    await deleteImage(index);
+                });
+            });
+        }
+        
+        async function deleteImage(index) {
+            if (!confirm('Are you sure you want to delete this image?')) return;
+            
+            const image = galleryImages[index];
+            
+            try {
+                const result = await deleteImageFromServer(image.id, image.filepath);
+                
+                if (result.success) {
+                    galleryImages.splice(index, 1);
+                    updateMainGallery();
+                    renderAdminGalleryList();
+                    showMessage('Image deleted successfully!', 'success', 'projectMessageContainer');
+                } else {
+                    showMessage('Failed to delete image: ' + result.message, 'error', 'projectMessageContainer');
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                showMessage('Error deleting image', 'error', 'projectMessageContainer');
+            }
+        }
+        
+        // File upload handling
+        let selectedImageFile = null;
+        
+        const browseBtn = document.getElementById('browseBtn');
+        const imageFileInput = document.getElementById('imageFile');
+        
+        if (browseBtn && imageFileInput) {
+            browseBtn.addEventListener('click', () => {
+                imageFileInput.click();
+            });
+            
+            imageFileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+        }
+        
+        const fileUploadContainer = document.getElementById('fileUploadContainer');
+        if (fileUploadContainer) {
+            fileUploadContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadContainer.classList.add('drag-over');
+            });
+            
+            fileUploadContainer.addEventListener('dragleave', () => {
+                fileUploadContainer.classList.remove('drag-over');
+            });
+            
+            fileUploadContainer.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadContainer.classList.remove('drag-over');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    handleFileSelect(e.dataTransfer.files[0]);
+                }
+            });
+        }
+        
+        function handleFileSelect(file) {
+            if (!file.type.match('image.*')) {
+                showMessage('Please select an image file (JPEG, PNG, etc.)', 'error', 'projectMessageContainer');
+                return;
+            }
+            
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showMessage('Image size should be less than 5MB', 'error', 'projectMessageContainer');
+                return;
+            }
+            
+            selectedImageFile = file;
+            
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const selectedFile = document.getElementById('selectedFile');
+            
+            if (fileName) fileName.textContent = file.name;
+            if (fileSize) fileSize.textContent = formatFileSize(file.size);
+            if (selectedFile) selectedFile.classList.add('active');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewImage = document.getElementById('previewImage');
+                const imagePreview = document.getElementById('imagePreview');
+                if (previewImage) previewImage.src = e.target.result;
+                if (imagePreview) imagePreview.classList.add('active');
+            };
+            reader.readAsDataURL(file);
+            
+            checkFormValidity();
+            showMessage('Image selected successfully!', 'success', 'projectMessageContainer');
+        }
+        
+        function checkFormValidity() {
+            const uploadBtn = document.getElementById('uploadImageBtn');
+            if (uploadBtn) {
+                uploadBtn.disabled = selectedImageFile === null;
+            }
+        }
+        
+        // Upload image button
+        const uploadImageBtn = document.getElementById('uploadImageBtn');
+        if (uploadImageBtn) {
+            uploadImageBtn.addEventListener('click', async () => {
+                if (!selectedImageFile) {
+                    showMessage('Please select an image first', 'error', 'projectMessageContainer');
+                    return;
+                }
+                
+                const caption = document.getElementById('imageCaption').value;
+                const category = document.getElementById('imageCategory').value;
+                
+                const originalText = uploadImageBtn.innerHTML;
+                uploadImageBtn.innerHTML = '<span class="spinner"></span> Uploading...';
+                uploadImageBtn.disabled = true;
+                
+                try {
+                    const result = await uploadImageToServer(selectedImageFile, caption, category);
+                    
+                    if (result.success) {
+                        // Add the new image to gallery
+                        galleryImages.push(result.image);
+                        updateMainGallery();
+                        renderAdminGalleryList();
+                        
+                        // Reset form
+                        selectedImageFile = null;
+                        document.getElementById('selectedFile').classList.remove('active');
+                        document.getElementById('imagePreview').classList.remove('active');
+                        document.getElementById('imageCaption').value = '';
+                        document.getElementById('imageFile').value = '';
+                        
+                        showMessage('Image uploaded successfully!', 'success', 'projectMessageContainer');
+                    } else {
+                        showMessage('Upload failed: ' + result.message, 'error', 'projectMessageContainer');
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    showMessage('Error uploading image. Please try again.', 'error', 'projectMessageContainer');
+                }
+                
+                uploadImageBtn.innerHTML = originalText;
+                uploadImageBtn.disabled = false;
+                checkFormValidity();
+            });
+        }
+        
+        // Export data
+        const exportDataBtn = document.getElementById('exportDataBtn');
+        if (exportDataBtn) {
+            exportDataBtn.addEventListener('click', () => {
+                const data = {
+                    galleryImages: galleryImages,
+                    exportDate: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = 'mhlongosa-gallery-backup.json';
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                showMessage('Data exported successfully!', 'success');
+            });
+        }
+        
+        // Import data
+        const importDataBtn = document.getElementById('importDataBtn');
+        const importFile = document.getElementById('importFile');
+        
+        if (importDataBtn && importFile) {
+            importDataBtn.addEventListener('click', () => {
+                importFile.click();
+            });
+            
+            importFile.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        try {
+                            const data = JSON.parse(e.target.result);
+                            if (data.galleryImages && Array.isArray(data.galleryImages)) {
+                                if (confirm(`Import ${data.galleryImages.length} images? This will replace your current gallery.`)) {
+                                    galleryImages = data.galleryImages;
+                                    updateMainGallery();
+                                    renderAdminGalleryList();
+                                    showMessage('Data imported successfully!', 'success');
+                                }
+                            } else {
+                                showMessage('Invalid data format', 'error');
+                            }
+                        } catch (error) {
+                            showMessage('Error parsing JSON file', 'error');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                    importFile.value = '';
+                }
+            });
+        }
+        
+        // Reset data
+        const resetDataBtn = document.getElementById('resetDataBtn');
+        if (resetDataBtn) {
+            resetDataBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to reset all data to default? This will remove all your uploaded images.')) {
+                    galleryImages = [...defaultImages];
+                    updateMainGallery();
+                    renderAdminGalleryList();
+                    showMessage('Data reset to default!', 'success');
+                }
+            });
+        }
+        
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('show');
+            });
+        }
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    if (navLinks) {
+                        navLinks.classList.remove('show');
+                    }
+                }
+            });
+        });
+        
+        // Quote button
+        const openQuoteBtn = document.getElementById('openQuoteBtn');
+        const navQuoteBtn = document.getElementById('navQuoteBtn');
+        
+        if (openQuoteBtn) {
+            openQuoteBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '#contact';
+            });
+        }
+        
+        if (navQuoteBtn) {
+            navQuoteBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '#contact';
+            });
+        }
+        
+        // Contact form
+        const quickContactForm = document.getElementById('quickContactForm');
+        if (quickContactForm) {
+            quickContactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const phone = document.getElementById('contactPhone').value;
+                const message = document.getElementById('contactMessage').value;
+                
+                const mailtoLink = `mailto:info@mhlongosa.co.za?subject=Contact from ${name}&body=Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${message}`;
+                
+                const statusDiv = document.getElementById('emailStatus');
+                statusDiv.innerHTML = '<div class="message success">Opening your email client...</div>';
+                
+                setTimeout(() => {
+                    window.location.href = mailtoLink;
+                }, 1000);
+                
+                quickContactForm.reset();
+            });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadGalleryFromServer();
+            initializeLightbox();
+            
+            if (document.body.classList.contains('admin-mode')) {
+                checkLoginStatus();
+            }
+            
+            // Enter key for login
+            const adminPasswordInput = document.getElementById('adminPassword');
+            if (adminPasswordInput) {
+                adminPasswordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && loginBtn) {
+                        loginBtn.click();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
